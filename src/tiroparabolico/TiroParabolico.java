@@ -18,6 +18,7 @@ public class TiroParabolico {
     public static void main(String[] args) {
         // TODO code application logic here
         int x = 500;
+        int z =20;
     }
     
 }
