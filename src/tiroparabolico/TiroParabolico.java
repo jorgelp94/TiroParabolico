@@ -16,10 +16,8 @@ public class TiroParabolico {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        int x = 500;
-        int z =20;
-        System.out.println("jorge");
+                JframeExam holaMundo = new JframeExam();
+                holaMundo.setVisible(true);
     }
     
 }
