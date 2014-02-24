@@ -19,6 +19,7 @@ public class TiroParabolico {
         // TODO code application logic here
         int x = 500;
         int z =20;
+        System.out.println("jorge");
     }
     
 }
