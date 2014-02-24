@@ -41,21 +41,19 @@ public class Balon extends Base {
     public Balon(int posX, int posY) {
         super(posX, posY);
         //Se cargan las imágenes(cuadros) para la animación
-        Image elef1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/e1.gif"));
-        Image elef2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/e2.gif"));
-        Image elef3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/e3.gif"));
-        Image elef4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/e4.gif"));
-        Image elef5 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/e5.gif"));
-        Image elef6 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/e6.gif"));
+        Image balon1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/balon1.gif"));
+        Image balon2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/balon2.gif"));
+        Image balon3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/balon3.gif"));
+        Image balon4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/balon4.gif"));
+        Image balon5 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/balon5.gif"));
 
         //Se crea la animación
         anim = new Animacion();
-        anim.sumaCuadro(elef1, 100);
-        anim.sumaCuadro(elef2, 100);
-        anim.sumaCuadro(elef3, 100);
-        anim.sumaCuadro(elef4, 100);
-        anim.sumaCuadro(elef5, 100);
-        anim.sumaCuadro(elef6, 100);
+        anim.sumaCuadro(balon1, 100);
+        anim.sumaCuadro(balon2, 100);
+        anim.sumaCuadro(balon3, 100);
+        anim.sumaCuadro(balon4, 100);
+        anim.sumaCuadro(balon5, 100);
     }
     /**
      * Metodo que hace llamada al metodo de anim para actualizar la imagen segun el tiempo
