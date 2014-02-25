@@ -48,11 +48,12 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private boolean ladoDer;
     private int velocI;
     private double t;
-     private double gravedad;
+    private double gravedad;
     private double angulo;
     private double anguloRadianes;
     private double cos;
     private double sin;
+    private int caidas; //cuenta las veces que cae el balon
     
 
     /**
@@ -74,6 +75,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         setBackground(Color.yellow);
         addKeyListener(this);
         addMouseListener(this);
+        
+        caidas = 0;
         
         presionaI = false;
         ladoIzq = false;
@@ -234,6 +237,11 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
             balon.setPosY(100);
             t=.15;
             bomb.play();
+            caidas++; //Cuenta cuando hay una caida
+            if (caidas == 3) {
+                vidas--;// se resta una vida cuando el balon cae 3 veces
+                caidas = 0;
+            }
         }
        
     }
@@ -397,6 +405,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 //Dibuja la imagen en la posicion actualizada
                 g.drawImage(anotacion.getImagenI(), anotacion.getPosX(), anotacion.getPosY(), this);
 //                g.drawString("Puntos : " + list.get(0).getNum(), 10, 10);
+                g.drawString("Vidas: "+ vidas, getWidth()/2 - 8, 100);
                 if (isPause()) {
                     g.drawString(balon.getPAUSE(), balon.getPosX() + 15, balon.getPosY() + 30);
                 }
