@@ -40,6 +40,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private long tiempoInicial;
     private boolean pause;
     private boolean choca;
+    private boolean presionaI;
 
     /**
      * Metodo <I>init</I> sobrescrito de la clase
@@ -53,7 +54,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         this.setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPause(false);
-        vidas = 3;    // Le asignamos un valor inicial a las vidas
+        vidas = 5;    // Le asignamos un valor inicial a las vidas
 //		direccion = 4;    // Direccion hacia la derecha
         int posX = this.getWidth() / 2 - 50;    // posicion en x es un cuarto del applet
 //		int posY = (int) (Math.random() *(getHeight() / 4));    // posicion en y es un cuarto del applet
@@ -63,6 +64,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         setBackground(Color.yellow);
         addKeyListener(this);
         addMouseListener(this);
+        
+        presionaI = false;
         //Se cargan los sonidos.
         
         bomb = new SoundClip("sounds/Explosion.wav");
@@ -248,6 +251,16 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 direccion = 4;
             }
         }
+        
+        //Si se presiona la tecla I, presionaI cambia a verdadero. si se vuelve a presionar presionaI cambia a falso
+        if (e.getKeyCode() == KeyEvent.VK_I) {
+            if (presionaI) {
+                presionaI = false;
+            }
+            else {
+                presionaI = true;
+            }
+        }
     }
 
     /**
@@ -346,6 +359,9 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 if (isChoca()) {
                     g.drawString(balon.getDISP(), balon.getPosX() + 15, balon.getPosY() + 30);
                     choca = false;
+                }
+                if (presionaI) {
+                    g.drawString("Instrucciones:...................", getWidth()/2, 200);
                 }
             } else {
                 //Da un mensaje mientras se carga el dibujo	
