@@ -32,7 +32,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private Image gameover;    //Imagen a desplegar al acabar el juego.	 
     private Graphics dbg;	// Objeto grafico
     private SoundClip sonido;    // Objeto SoundClip
-    private SoundClip rat;    // Objeto SoundClip
+    private SoundClip anota;    // Objeto SoundClip
     private SoundClip bomb;    //Objeto SoundClip 
     private Balon balon;    // Objeto de la clase Balon
     //Variables de control de tiempo de la animación
@@ -64,6 +64,10 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         addKeyListener(this);
         addMouseListener(this);
         //Se cargan los sonidos.
+        
+        bomb = new SoundClip("sounds/Explosion.wav");
+        anota = new SoundClip("sounds/Cheering.wav");
+        
         URL goURL = this.getClass().getResource("gameover.jpg");
         gameover = Toolkit.getDefaultToolkit().getImage(goURL);
         start();
