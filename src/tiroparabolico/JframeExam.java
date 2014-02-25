@@ -82,7 +82,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         presionaI = false;
         ladoIzq = false;
         ladoDer = false;
-        activaSonido = false;
+        activaSonido = true; // El sonido esta activado al iniciar el juego
         //Se cargan los sonidos.
         
         bomb = new SoundClip("sounds/Explosion.wav");
