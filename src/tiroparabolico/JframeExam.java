@@ -44,7 +44,12 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private boolean presionaI;
     private boolean balonMove;
     private int velocI;
-    private int t;
+    private double t;
+     private double gravedad;
+    private double angulo;
+    private double anguloRadianes;
+    private double cos;
+    private double sin;
     
 
     /**
@@ -60,7 +65,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPause(false);
         vidas = 5;    // Le asignamos un valor inicial a las vidas
-        balon = new Balon(0, getHeight()-80);
+        balon = new Balon(0, 100);
         
         setBackground(Color.yellow);
         addKeyListener(this);
@@ -147,12 +152,18 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
             }
 
           if(balonMove){
+              setAnguloRadianes(Math.toRadians(getAngulo()));
+              setCos(Math.cos(getAnguloRadianes()));
+              setSin(Math.sin(getAnguloRadianes()));
+              int x = (int) (velocI * getCos() * t) + balon.getPosX();
+              int y = (int) (velocI * getSin() * t * getGravedad() * t * t) + balon.getPosY();
+              balon.setPosX(x);
+              balon.setPosY(y);
+              t = t + .01;
+            //Guarda el tiempo actual
+            
             long tiempoTranscurrido =
                     System.currentTimeMillis() - getTiempoActual();
-            balon.setPosX(balon.getPosX()+velocI);
-            Double y = -(velocI + (.5)*(-.98)*t);
-            balon.setPosY(balon.getPosY()+y.intValue());
-            //Guarda el tiempo actual
             setTiempoActual(getTiempoActual() + tiempoTranscurrido);
 
             //Actualiza la animación en base al tiempo transcurrido
@@ -466,14 +477,84 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     /**
      * @return the t
      */
-    public int getT() {
+    public double getT() {
         return t;
     }
 
     /**
      * @param t the t to set
      */
-    public void setT(int t) {
+    public void setT(double t) {
         this.t = t;
+    }
+
+    /**
+     * @return the gravedad
+     */
+    public double getGravedad() {
+        return gravedad;
+    }
+
+    /**
+     * @param gravedad the gravedad to set
+     */
+    public void setGravedad(double gravedad) {
+        this.gravedad = gravedad;
+    }
+
+    /**
+     * @return the angulo
+     */
+    public double getAngulo() {
+        return angulo;
+    }
+
+    /**
+     * @param angulo the angulo to set
+     */
+    public void setAngulo(double angulo) {
+        this.angulo = angulo;
+    }
+
+    /**
+     * @return the anguloRadianes
+     */
+    public double getAnguloRadianes() {
+        return anguloRadianes;
+    }
+
+    /**
+     * @param anguloRadianes the anguloRadianes to set
+     */
+    public void setAnguloRadianes(double anguloRadianes) {
+        this.anguloRadianes = anguloRadianes;
+    }
+
+    /**
+     * @return the cos
+     */
+    public double getCos() {
+        return cos;
+    }
+
+    /**
+     * @param cos the cos to set
+     */
+    public void setCos(double cos) {
+        this.cos = cos;
+    }
+
+    /**
+     * @return the sin
+     */
+    public double getSin() {
+        return sin;
+    }
+
+    /**
+     * @param sin the sin to set
+     */
+    public void setSin(double sin) {
+        this.sin = sin;
     }
 }
