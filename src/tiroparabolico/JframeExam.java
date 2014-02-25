@@ -14,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.Random;
@@ -42,6 +43,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private boolean choca;
     private boolean presionaI;
     private boolean balonMove;
+    private int velocI;
+    private int t;
     
 
     /**
@@ -68,7 +71,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         
         bomb = new SoundClip("sounds/Explosion.wav");
         anota = new SoundClip("sounds/Cheering.wav");
-        
+        velocI = 1;
+        t=0;
         URL goURL = this.getClass().getResource("gameover.jpg");
         gameover = Toolkit.getDefaultToolkit().getImage(goURL);
         start();
@@ -145,12 +149,15 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
           if(balonMove){
             long tiempoTranscurrido =
                     System.currentTimeMillis() - getTiempoActual();
-
+            balon.setPosX(balon.getPosX()+velocI);
+            Double y = -(velocI + (.5)*(-.98)*t);
+            balon.setPosY(balon.getPosY()+y.intValue());
             //Guarda el tiempo actual
             setTiempoActual(getTiempoActual() + tiempoTranscurrido);
 
             //Actualiza la animación en base al tiempo transcurrido
             balon.actualiza(tiempoTranscurrido);
+            t++;
           }
         }
     }
@@ -440,5 +447,33 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void setBalonMove(boolean balonMove) {
         this.balonMove = balonMove;
+    }
+
+    /**
+     * @return the velocI
+     */
+    public int getVelocI() {
+        return velocI;
+    }
+
+    /**
+     * @param velocI the velocI to set
+     */
+    public void setVelocI(int velocI) {
+        this.velocI = velocI;
+    }
+
+    /**
+     * @return the t
+     */
+    public int getT() {
+        return t;
+    }
+
+    /**
+     * @param t the t to set
+     */
+    public void setT(int t) {
+        this.t = t;
     }
 }
