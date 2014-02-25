@@ -44,6 +44,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private boolean choca;
     private boolean presionaI;
     private boolean balonMove;
+    private boolean ladoIzq; 
+    private boolean ladoDer;
     private int velocI;
     private double t;
      private double gravedad;
@@ -74,6 +76,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         addMouseListener(this);
         
         presionaI = false;
+        ladoIzq = false;
+        ladoDer = false;
         //Se cargan los sonidos.
         
         bomb = new SoundClip("sounds/Explosion.wav");
@@ -136,14 +140,33 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         if (!isPause()) {
             switch (direccion) {
                 case 3: {
-                    anotacion.setPosX(anotacion.getPosX() - 1);
-                    break;    //se mueve hacia izquierda
+                    if (!ladoIzq){
+                        anotacion.setPosX(anotacion.getPosX() - 1);
+                        break;    //se mueve hacia izquierda
+                    }
+                    
                 }
                 case 4: {
-                    anotacion.setPosX(anotacion.getPosX() + 1);
-                    break;    //se mueve hacia derecha	
+                    if (!ladoDer) {
+                        anotacion.setPosX(anotacion.getPosX() + 1);
+                        break;    //se mueve hacia derecha
+                    }	
                 }
             }
+            
+          //Checa que el jugador no se salga del applet  
+          if (anotacion.getAncho() + anotacion.getPosX() >= getWidth()) {
+              ladoDer = true;
+          }
+          else {
+              ladoDer = false;
+          }
+          if (anotacion.getPosX() <= 0) {
+              ladoIzq = true;
+          }
+          else {
+              ladoIzq = false;
+          }
 
           if(balonMove){
               setAnguloRadianes(Math.toRadians(getAngulo()));
@@ -210,6 +233,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
             balon.setPosX(0);
             balon.setPosY(100);
             t=.15;
+            bomb.play();
         }
        
     }
