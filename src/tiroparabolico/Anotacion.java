@@ -23,7 +23,7 @@ public class Anotacion extends Base{
     
     public Anotacion(int posX, int posY) {
         super(posX, posY);
-        Image jugador1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador1.gif"));
+//        Image jugador1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador1.gif"));
 	Image jugador2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador2.gif"));
 	Image jugador3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador3.gif"));
         Image jugador4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador4.gif"));
@@ -37,7 +37,7 @@ public class Anotacion extends Base{
         
         //Se inicializa la animación
         anim = new Animacion();
-	anim.sumaCuadro(jugador1, 100);
+//	anim.sumaCuadro(jugador1, 100);
 	anim.sumaCuadro(jugador2, 100);
 	anim.sumaCuadro(jugador3, 100);
         anim.sumaCuadro(jugador4, 100);

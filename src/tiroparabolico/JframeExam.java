@@ -36,6 +36,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private SoundClip anota;    // Objeto SoundClip
     private SoundClip bomb;    //Objeto SoundClip 
     private Balon balon;    // Objeto de la clase Balon
+    private Anotacion anotacion; //Objeto de la clase Anotacion
     //Variables de control de tiempo de la animación
     private long tiempoActual;
     private long tiempoInicial;
@@ -66,6 +67,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         setPause(false);
         vidas = 5;    // Le asignamos un valor inicial a las vidas
         balon = new Balon(0, 100);
+        anotacion = new Anotacion(getWidth()/2, getHeight()-80);
         
         setBackground(Color.yellow);
         addKeyListener(this);
@@ -76,8 +78,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         
         bomb = new SoundClip("sounds/Explosion.wav");
         anota = new SoundClip("sounds/Cheering.wav");
-        velocI = 1;
-        t=0;
+        velocI = 250;
+        t=.15;
         URL goURL = this.getClass().getResource("gameover.jpg");
         gameover = Toolkit.getDefaultToolkit().getImage(goURL);
         start();
@@ -133,20 +135,12 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         //Dependiendo de la direccion del elefante es hacia donde se mueve.
         if (!isPause()) {
             switch (direccion) {
-                case 1: {
-                    balon.setPosY(balon.getPosY() - 1);
-                    break;    //se mueve hacia arriba
-                }
                 case 3: {
-                    balon.setPosY(balon.getPosY() + 1);
-                    break;    //se mueve hacia abajo
-                }
-                case 4: {
-                    balon.setPosX(balon.getPosX() - 1);
+                    anotacion.setPosX(anotacion.getPosX() - 1);
                     break;    //se mueve hacia izquierda
                 }
-                case 2: {
-                    balon.setPosX(balon.getPosX() + 1);
+                case 4: {
+                    anotacion.setPosX(anotacion.getPosX() + 1);
                     break;    //se mueve hacia derecha	
                 }
             }
@@ -155,8 +149,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
               setAnguloRadianes(Math.toRadians(getAngulo()));
               setCos(Math.cos(getAnguloRadianes()));
               setSin(Math.sin(getAnguloRadianes()));
-              int x = (int) (velocI * getCos() * t) + balon.getPosX();
-              int y = (int) (velocI * getSin() * t * getGravedad() * t * t) + balon.getPosY();
+              int x = (int) (.25 * getCos() * t) + balon.getPosX();
+              int y = (int) (.25*.009 *t*t) + balon.getPosY();
               balon.setPosX(x);
               balon.setPosY(y);
               t = t + .01;
@@ -168,6 +162,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
 
             //Actualiza la animación en base al tiempo transcurrido
             balon.actualiza(tiempoTranscurrido);
+            anotacion.actualiza(tiempoTranscurrido);
             t++;
           }
         }
@@ -180,37 +175,42 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void checaColision() {
         //Colision del elefante con el Applet dependiendo a donde se mueve.
-        switch (direccion) {
-            case 1: { //se mueve hacia arriba con la flecha arriba.
-                if (balon.getPosY() < 0) {
-                    direccion = 3;
-                    sonido.play();
-                }
-                break;
-            }
-            case 3: { //se mueve hacia abajo con la flecha abajo.
-                if (balon.getPosY() + balon.getAlto() > getHeight()) {
-                    direccion = 1;
-                    sonido.play();
-                }
-                break;
-            }
-            case 4: { //se mueve hacia izquierda con la flecha izquierda.
-                if (balon.getPosX() < 0) {
-                    direccion = 2;
-                    sonido.play();
-                }
-                break;
-            }
-            case 2: { //se mueve hacia derecha con la flecha derecha.
-                if (balon.getPosX() + balon.getAncho() > getWidth()) {
-                    direccion = 4;
-                    sonido.play();
-                }
-                break;
-            }
+//        switch (direccion) {
+//            case 1: { //se mueve hacia arriba con la flecha arriba.
+//                if (balon.getPosY() < 0) {
+//                    direccion = 3;
+//                    sonido.play();
+//                }
+//                break;
+//            }
+//            case 3: { //se mueve hacia abajo con la flecha abajo.
+//                if (balon.getPosY() + balon.getAlto() > getHeight()) {
+//                    direccion = 1;
+//                    sonido.play();
+//                }
+//                break;
+//            }
+//            case 4: { //se mueve hacia izquierda con la flecha izquierda.
+//                if (balon.getPosX() < 0) {
+//                    direccion = 2;
+//                    sonido.play();
+//                }
+//                break;
+//            }
+//            case 2: { //se mueve hacia derecha con la flecha derecha.
+//                if (balon.getPosX() + balon.getAncho() > getWidth()) {
+//                    direccion = 4;
+//                    sonido.play();
+//                }
+//                break;
+//            }
+//        }
+        if(balon.getPosY()>getHeight()){
+            balonMove=false;
+            balon.setPosX(0);
+            balon.setPosY(100);
+            t=.15;
         }
-
        
     }
 
@@ -370,6 +370,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
             if (balon != null) {
                 //Dibuja la imagen en la posicion actualizada
                 g.drawImage(balon.getImagenI(), balon.getPosX(), balon.getPosY(), this);
+                //Dibuja la imagen en la posicion actualizada
+                g.drawImage(anotacion.getImagenI(), anotacion.getPosX(), anotacion.getPosY(), this);
 //                g.drawString("Puntos : " + list.get(0).getNum(), 10, 10);
                 if (isPause()) {
                     g.drawString(balon.getPAUSE(), balon.getPosX() + 15, balon.getPosY() + 30);
@@ -556,5 +558,19 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void setSin(double sin) {
         this.sin = sin;
+    }
+
+    /**
+     * @return the anotacion
+     */
+    public Anotacion getAnotacion() {
+        return anotacion;
+    }
+
+    /**
+     * @param anotacion the anotacion to set
+     */
+    public void setAnotacion(Anotacion anotacion) {
+        this.anotacion = anotacion;
     }
 }
