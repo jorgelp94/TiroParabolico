@@ -23,16 +23,16 @@ public class Anotacion extends Base{
     
     public Anotacion(int posX, int posY) {
         super(posX, posY);
-        Image jugador1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Unknown-5.jpg"));
-	Image jugador2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Unknown-6.jpg"));
-	Image jugador3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Unknown-7.jpg"));
-        Image jugador4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Unknown-8.jpg"));
-	Image jugador5 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Unknown-9.jpg"));
-	Image jugador6 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Unknown-10.jpg"));
-        Image jugador7 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Unknown-11.jpg"));
-	Image jugador8 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Unknown-12.jpg"));
-	Image jugador9 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Unknown-13.jpg"));
-        Image jugador10 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Unknown-14.jpg"));
+        Image jugador1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador1.gif"));
+	Image jugador2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador2.gif"));
+	Image jugador3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador3.gif"));
+        Image jugador4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador4.gif"));
+	Image jugador5 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador5.gif"));
+	Image jugador6 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador6.gif"));
+        Image jugador7 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador7.gif"));
+	Image jugador8 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador8.gif"));
+	Image jugador9 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador9.gif"));
+        Image jugador10 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jugador10.gif"));
 	
         
         //Se inicializa la animación
