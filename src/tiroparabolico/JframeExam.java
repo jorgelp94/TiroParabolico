@@ -41,6 +41,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private boolean pause;
     private boolean choca;
     private boolean presionaI;
+    private boolean balonMove;
+    
 
     /**
      * Metodo <I>init</I> sobrescrito de la clase
@@ -51,15 +53,11 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      */
         public JframeExam() {
             
-        this.setSize(500, 500);
+        this.setSize(1300, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPause(false);
         vidas = 5;    // Le asignamos un valor inicial a las vidas
-//		direccion = 4;    // Direccion hacia la derecha
-        int posX = this.getWidth() / 2 - 50;    // posicion en x es un cuarto del applet
-//		int posY = (int) (Math.random() *(getHeight() / 4));    // posicion en y es un cuarto del applet
-        int posY = this.getHeight() / 2 - 50;
-        balon = new Balon(posX, posY);
+        balon = new Balon(0, getHeight()-80);
         
         setBackground(Color.yellow);
         addKeyListener(this);
@@ -144,7 +142,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 }
             }
 
-          
+          if(balonMove){
             long tiempoTranscurrido =
                     System.currentTimeMillis() - getTiempoActual();
 
@@ -153,7 +151,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
 
             //Actualiza la animación en base al tiempo transcurrido
             balon.actualiza(tiempoTranscurrido);
-
+          }
         }
     }
 
@@ -253,6 +251,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         }
         
         //Si se presiona la tecla I, presionaI cambia a verdadero. si se vuelve a presionar presionaI cambia a falso
+        // Salen instrucciones del juego
         if (e.getKeyCode() == KeyEvent.VK_I) {
             if (presionaI) {
                 presionaI = false;
@@ -293,19 +292,20 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      * @param e es el <code>Mouse Event</code> usado para determinar dodne dio click.
      */
     public void mousePressed(MouseEvent e) {
-        if (e.getPoint().getX() <= getWidth() / 2 && e.getPoint().getY() <= getHeight() / 2) {
-            //4
-            direccion = 4;
-        } else if (e.getPoint().getX() >= getWidth() / 2 && e.getPoint().getY() <= getHeight() / 2) {
-            //1
-            direccion = 1;
-        } else if (e.getPoint().getX() >= getWidth() / 2 && e.getPoint().getY() >= getHeight() / 2) {
-            //2 
-            direccion = 2;
-        } else if (e.getPoint().getX() <= getWidth() / 2 && e.getPoint().getY() >= getHeight() / 2) {
-            //3 
-            direccion = 3;
-        }
+//        if (e.getPoint().getX() <= getWidth() / 2 && e.getPoint().getY() <= getHeight() / 2) {
+//            //4
+//            direccion = 4;
+//        } else if (e.getPoint().getX() >= getWidth() / 2 && e.getPoint().getY() <= getHeight() / 2) {
+//            //1
+//            direccion = 1;
+//        } else if (e.getPoint().getX() >= getWidth() / 2 && e.getPoint().getY() >= getHeight() / 2) {
+//            //2 
+//            direccion = 2;
+//        } else if (e.getPoint().getX() <= getWidth() / 2 && e.getPoint().getY() >= getHeight() / 2) {
+//            //3 
+//            direccion = 3;
+//        }
+        if(balon.getPerimetro().contains(e.getPoint())) setBalonMove(true);
     }
     /**
      * Metodo <I>mouseReleased</I>
@@ -426,5 +426,19 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void setChoca(boolean choca) {
         this.choca = choca;
+    }
+
+    /**
+     * @return the balonMove
+     */
+    public boolean isBalonMove() {
+        return balonMove;
+    }
+
+    /**
+     * @param balonMove the balonMove to set
+     */
+    public void setBalonMove(boolean balonMove) {
+        this.balonMove = balonMove;
     }
 }
