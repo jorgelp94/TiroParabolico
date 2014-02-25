@@ -55,6 +55,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private double cos;
     private double sin;
     private int caidas; //cuenta las veces que cae el balon
+    private int score; // puntaje del jugador
     
 
     /**
@@ -78,6 +79,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         addMouseListener(this);
         
         caidas = 0;
+        score = 0;
         
         presionaI = false;
         ladoIzq = false;
@@ -233,7 +235,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
 //                break;
 //            }
 //        }
-        if(balon.getPosY()>getHeight()){
+        if (balon.getPosY() > getHeight()){
             balonMove=false;
             balon.setPosX(0);
             balon.setPosY(100);
@@ -246,6 +248,17 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 vidas--;// se resta una vida cuando el balon cae 3 veces
                 caidas = 0;
             }
+        }
+        
+        if (balon.intersecta(anotacion)) {
+            if (activaSonido) {
+                anota.play();
+            }
+            balonMove=false;
+            balon.setPosX(0);
+            balon.setPosY(100);
+            t=.15;
+            score = score + 2;
         }
        
     }
@@ -419,7 +432,10 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 //Dibuja la imagen en la posicion actualizada
                 g.drawImage(anotacion.getImagenI(), anotacion.getPosX(), anotacion.getPosY(), this);
 //                g.drawString("Puntos : " + list.get(0).getNum(), 10, 10);
-                g.drawString("Vidas: "+ vidas, getWidth()/2 - 10, 100);
+                //Muestra las vidas
+                g.drawString("Vidas: "+ vidas, getWidth()/2 - 10, 80);
+                //Muestra el puntaje
+                g.drawString("Score: " + score, balon.getAncho(), 80);
                 if (isPause()) {
                     g.drawString(balon.getPAUSE(), balon.getPosX() + 15, balon.getPosY() + 30);
                 }
