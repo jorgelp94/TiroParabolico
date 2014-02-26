@@ -84,7 +84,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPause(false);
         vidas = 5;    // Le asignamos un valor inicial a las vidas
-        balon = new Balon(0, 100);
+        balon = new Balon(0, 500);
         anotacion = new Anotacion(getWidth()/2, getHeight()-80);
         
         setBackground(Color.white);
@@ -205,24 +205,26 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
           }
 
           if(balonMove){
-              setAnguloRadianes(Math.toRadians(getAngulo()));
+               //Guarda el tiempo actual
+            
+                long tiempoTranscurrido =
+                        System.currentTimeMillis() - getTiempoActual();
+                setTiempoActual(getTiempoActual() + tiempoTranscurrido);
+              setAnguloRadianes(45);
               setCos(Math.cos(getAnguloRadianes()));
               setSin(Math.sin(getAnguloRadianes()));
-              int x = (int) (.25 * getCos() * t) + balon.getPosX();
-              int y = (int) (.25*.009 *t*t) + balon.getPosY();
+              int x = (int) (112 * getCos() * t);
+              int y = (int) ((112* sin* t) - ( .5*9.8*t*t));
               balon.setPosX(x);
-              balon.setPosY(y);
-              t = t + .01;
-            //Guarda el tiempo actual
-            
-            long tiempoTranscurrido =
-                    System.currentTimeMillis() - getTiempoActual();
-            setTiempoActual(getTiempoActual() + tiempoTranscurrido);
+              balon.setPosY(-y+ 500);
+              System.out.println( "cos: " + cos+ " " + " sin: " + sin + " tiempo: " + t);
+              System.out.println( "x: " + x+ " " + " y: " + y);
+           
 
             //Actualiza la animación en base al tiempo transcurrido
             balon.actualiza(tiempoTranscurrido);
             anotacion.actualiza(tiempoTranscurrido);
-            t++;
+            t = t + .1;
           }
         }
     }
@@ -285,7 +287,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
             }
             balonMove=false;
             balon.setPosX(0);
-            balon.setPosY(100);
+            balon.setPosY(500);
             t=.15;
             score = score + 2;
         }
