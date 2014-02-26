@@ -284,6 +284,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         //velocI = (int)(Math.random()*(112-85)) + 85;
         if (balon.getPosY() > getHeight()){
             balonMove=false;
+            velocI = (int)(Math.random()*(112-85)) + 85; //85 a 112
             balon.setPosX(0);
             balon.setPosY(500);
             t=.15;
@@ -298,6 +299,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         }
         
         if (balon.intersecta(anotacion)) {
+            velocI = (int)(Math.random()*(112-85)) + 85; //85 a 112
             if (activaSonido) {
                 anota.play();
             }
