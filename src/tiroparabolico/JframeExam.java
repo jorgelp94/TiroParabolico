@@ -87,7 +87,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         balon = new Balon(0, 100);
         anotacion = new Anotacion(getWidth()/2, getHeight()-80);
         
-        setBackground(Color.yellow);
+        setBackground(Color.white);
         addKeyListener(this);
         addMouseListener(this);
         
@@ -494,17 +494,18 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 }
                 if (presionaI) {
                     g.drawString("Instrucciones:", getWidth()/4 + getWidth()/8, 200);
-                    g.drawString("El objetivo del juego es mover el jugador", getWidth()/4 + getWidth()/8, 220);
-                    g.drawString("con las flechas del teclado para que atrape", getWidth()/4 + getWidth()/8, 240);
-                    g.drawString("el balon de americano.", getWidth()/4 + getWidth()/8, 260);
-                    g.drawString("Moverse: ", getWidth()/4 + getWidth()/8, 280);
-                    g.drawString("Flecha izquierda - se mueve a la izquierda", getWidth()/4 + getWidth()/8, 300);
-                    g.drawString("Flecha derecha - se mueve a la derecha", getWidth()/4 + getWidth()/8, 320);
-                    g.drawString("I - muestra/oculta instrucciones", getWidth()/4 + getWidth()/8, 340);
-                    g.drawString("G - guarda el juego", getWidth()/4 + getWidth()/8, 360);
-                    g.drawString("C - carga el juego", getWidth()/4 + getWidth()/8, 380);
-                    g.drawString("P - pausa el juego", getWidth()/4 + getWidth()/8, 400);
-                    g.drawString("S - activa/desactiva el sonido del juego", getWidth()/4 + getWidth()/8, 420);
+                    g.drawString("Mueve el jugador con las flechas del teclado", getWidth()/4 + getWidth()/8, 220);
+                    g.drawString("para que atrape el balón de americano. Cada vez", getWidth()/4 + getWidth()/8, 240);
+                    g.drawString("que es atrapado ganas dos puntos y si el balón", getWidth()/4 + getWidth()/8, 260);
+                    g.drawString("cae tres veces pierdes una vida.", getWidth()/4 + getWidth()/8, 280);
+                    g.drawString("Teclas: ", getWidth()/4 + getWidth()/8, 300);
+                    g.drawString("Flecha izquierda - se mueve a la izquierda", getWidth()/4 + getWidth()/8, 320);
+                    g.drawString("Flecha derecha - se mueve a la derecha", getWidth()/4 + getWidth()/8, 340);
+                    g.drawString("I - muestra/oculta instrucciones", getWidth()/4 + getWidth()/8, 360);
+                    g.drawString("G - guarda el juego", getWidth()/4 + getWidth()/8, 380);
+                    g.drawString("C - carga el juego", getWidth()/4 + getWidth()/8, 400);
+                    g.drawString("P - pausa el juego", getWidth()/4 + getWidth()/8, 420);
+                    g.drawString("S - activa/desactiva el sonido del juego", getWidth()/4 + getWidth()/8, 440);
                 }
             } else {
                 //Da un mensaje mientras se carga el dibujo	
