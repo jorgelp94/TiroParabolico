@@ -68,7 +68,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private int score; // puntaje del jugador
     private String nombreArchivo;    //Nombre del archivo.
     private Vector vec;    // Objeto vector para agregar el puntaje.
-    
+    private String[] arr;  //array para obtener lo guardado
+
     
 
     /**
@@ -203,7 +204,19 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
           else {
               ladoIzq = false;
           }
-
+        try{
+            if (presionaC) {
+               leeArchivo();    //lee el contenido del archivo 
+            }
+            if (presionaG) {
+                System.out.println("Entrar1");
+                presionaG= false;
+                grabaArchivo();    //Graba el vector en el archivo.
+            }
+            
+	}catch(IOException e){
+            System.out.println("Error en " + e.toString());
+	}
           if(balonMove){
                //Guarda el tiempo actual
             
@@ -709,25 +722,35 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void leeArchivo() throws IOException{
     	BufferedReader fileIn;
-    	try{
-    		fileIn = new BufferedReader(new FileReader(nombreArchivo));
-    	} catch (FileNotFoundException e){
-    		File puntos = new File(nombreArchivo);
-    		PrintWriter fileOut = new PrintWriter(puntos);
-    		fileOut.println("100,demo");
-    		fileOut.close();
-    		fileIn = new BufferedReader(new FileReader(nombreArchivo));
-    	}
-    	String dato = fileIn.readLine();
-
-    	while(dato != null) {
-                //No entiendo esta parte del arreglo ni para que se usa
-    		//arr = dato.split(",");
-    		//int num = (Integer.parseInt(arr[0])); //ni esta
-    		//vec.add(new Puntaje(num));
-    		dato = fileIn.readLine();
-    	}
-    	fileIn.close();
+            try{
+                System.out.println(nombreArchivo+"");
+                fileIn = new BufferedReader(new FileReader(nombreArchivo));
+                String dato = fileIn.readLine();
+                setArr(dato.split(","));
+//                score = (Integer.parseInt(arr[0]));
+//                vidas = (Integer.parseInt(arr[1]));
+//                balon.setPosX(Integer.parseInt(arr[2]));
+//                balon.setPosX(Integer.parseInt(arr[3]));
+//                anotacion.setPosX(Integer.parseInt(arr[4]));
+//                anotacion.setPosY(Integer.parseInt(arr[5]));
+//                balonMove= true;
+//                
+//                gravedad = (Double.parseDouble(arr[7]));
+//                angulo = (Double.parseDouble(arr[8]));
+//                velocI = (Integer.parseInt(arr[9]));
+//                t = (Double.parseDouble(arr[10]));
+//                presionaC = true;
+//                bolaBool2 = true;
+            
+                actualiza();
+                
+                
+                
+                fileIn.close();
+            } 
+            catch (IOException ioe){
+                System.out.println("Se arrojo una excepcion " + ioe.toString());
+            }
     }
 
     /**
@@ -736,13 +759,30 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      * @throws IOException
      */
     public void grabaArchivo() throws IOException{
-    	PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
-    	for (int i=0; i<vec.size(); i++) {
-    		Puntaje x;
-    		x = (Puntaje) vec.get(i);
-    		fileOut.println(x.toString());
-    	}
-    	fileOut.close();	
+    	 try {
+                PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
+
+                fileOut.println("" +score + "," + vidas + "," + balon.getPosX() + "," + balon.getPosY() + "," + anotacion.getPosX() + "," + anotacion.getPosY() + "," + balonMove + "," + gravedad + "," + angulo + "," + velocI + "," + t);
+
+                fileOut.close();
+            }
+            catch (IOException ioe){
+                System.out.println("Se arrojo una excepcion " + ioe.toString());
+        }	
+    }
+
+    /**
+     * @return the arr
+     */
+    public String[] getArr() {
+        return arr;
+    }
+
+    /**
+     * @param arr the arr to set
+     */
+    public void setArr(String[] arr) {
+        this.arr = arr;
     }
     
 }
