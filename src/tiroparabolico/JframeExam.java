@@ -26,6 +26,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.FileWriter;
 import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.Font;
 
 public class JframeExam extends JFrame implements Runnable, KeyListener, MouseListener {
 
@@ -496,6 +498,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void paint1(Graphics g) {
           g.drawImage(fondo.getImage(), 0, 0,1300,700, this);
+          g.setFont(new Font("default", Font.BOLD, 16));
+          g.setColor(Color.RED);
         if (vidas > 0) {
             if (balon != null) {
                 //Dibuja la imagen en la posicion actualizada
@@ -515,10 +519,11 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                     choca = false;
                 }
                 if (presionaI) {
+                    
                     g.drawString("Instrucciones:", getWidth()/4 + getWidth()/8, 200);
                     g.drawString("Mueve el jugador con las flechas del teclado", getWidth()/4 + getWidth()/8, 220);
-                    g.drawString("para que atrape el balÃ³n de americano. Cada vez", getWidth()/4 + getWidth()/8, 240);
-                    g.drawString("que es atrapado ganas dos puntos y si el balÃ³n", getWidth()/4 + getWidth()/8, 260);
+                    g.drawString("para que atrape el balon de americano. Cada vez", getWidth()/4 + getWidth()/8, 240);
+                    g.drawString("que es atrapado ganas dos puntos y si el balon", getWidth()/4 + getWidth()/8, 260);
                     g.drawString("cae tres veces pierdes una vida.", getWidth()/4 + getWidth()/8, 280);
                     g.drawString("Teclas: ", getWidth()/4 + getWidth()/8, 300);
                     g.drawString("Flecha izquierda - se mueve a la izquierda", getWidth()/4 + getWidth()/8, 320);
