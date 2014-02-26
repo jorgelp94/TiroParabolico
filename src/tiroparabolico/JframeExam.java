@@ -173,17 +173,17 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void actualiza() {
         //Dependiendo de la direccion del elefante es hacia donde se mueve.
-        if (!isPause()) {
+        if (!isPause() && !presionaI) {
             switch (direccion) {
                 case 3: {
-                    if (!ladoIzq){
+                    if (!ladoIzq && balonMove){
                         anotacion.setPosX(anotacion.getPosX() - 1);
                         break;    //se mueve hacia izquierda
                     }
                     
                 }
                 case 4: {
-                    if (!ladoDer) {
+                    if (!ladoDer && balonMove) {
                         anotacion.setPosX(anotacion.getPosX() + 1);
                         break;    //se mueve hacia derecha
                     }	
