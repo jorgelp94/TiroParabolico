@@ -45,7 +45,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private SoundClip bomb;    //Objeto SoundClip 
     private Balon balon;    // Objeto de la clase Balon
     private Anotacion anotacion; //Objeto de la clase Anotacion
-    //Variables de control de tiempo de la animación
+    //Variables de control de tiempo de la animaciÃ³n
     private long tiempoActual;
     private long tiempoInicial;
     private boolean pause;
@@ -59,7 +59,6 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private boolean presionaC;
     private int velocI;
     private double t;
-    private double time;
     private double gravedad;
     private double angulo;
     private double anguloRadianes;
@@ -110,7 +109,6 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         anota = new SoundClip("sounds/Cheering.wav");
         velocI = (int)(Math.random()*(112-85)) + 85; //85 a 112
         t=.15;
-        time = 0;
         URL goURL = this.getClass().getResource("gameover.jpg");
         gameover = Toolkit.getDefaultToolkit().getImage(goURL);
         start();
@@ -229,8 +227,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
               setAnguloRadianes(45);
               setCos(Math.cos(getAnguloRadianes()));
               setSin(Math.sin(getAnguloRadianes()));
-              int x = (int) (velocI * getCos() * (t+time));
-              int y = (int) ((velocI* sin* (t+time)) - ( .5*9.8*(t+time)*(t+time)));
+              int x = (int) (velocI * getCos() * t);
+              int y = (int) ((velocI* sin* t) - ( .5*9.8*t*t));
               balon.setPosX(x);
               balon.setPosY(-y+ 500);
               System.out.println( "cos: " + cos+ " " + " sin: " + sin + " tiempo: " + t);
@@ -238,12 +236,11 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
               System.out.println( "Velocidad: " + velocI );
            
 
-            //Actualiza la animación en base al tiempo transcurrido
+            //Actualiza la animaciÃ³n en base al tiempo transcurrido
             balon.actualiza(tiempoTranscurrido);
             anotacion.actualiza(tiempoTranscurrido);
             t = t + .1;
           }
-          
         }
     }
 
@@ -284,8 +281,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
 //                break;
 //            }
 //        }
+        //velocI = (int)(Math.random()*(112-85)) + 85;
         if (balon.getPosY() > getHeight()){
-            velocI = (int)(Math.random()*(112-85)) + 85;
             balonMove=false;
             balon.setPosX(0);
             balon.setPosY(500);
@@ -296,13 +293,11 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
             caidas++; //Cuenta cuando hay una caida
             if (caidas == 3) {
                 vidas--;// se resta una vida cuando el balon cae 3 veces
-                time += .5;
                 caidas = 0;
             }
         }
         
         if (balon.intersecta(anotacion)) {
-            velocI = (int)(Math.random()*(112-85)) + 85;
             if (activaSonido) {
                 anota.play();
             }
@@ -518,8 +513,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 if (presionaI) {
                     g.drawString("Instrucciones:", getWidth()/4 + getWidth()/8, 200);
                     g.drawString("Mueve el jugador con las flechas del teclado", getWidth()/4 + getWidth()/8, 220);
-                    g.drawString("para que atrape el balón de americano. Cada vez", getWidth()/4 + getWidth()/8, 240);
-                    g.drawString("que es atrapado ganas dos puntos y si el balón", getWidth()/4 + getWidth()/8, 260);
+                    g.drawString("para que atrape el balÃ³n de americano. Cada vez", getWidth()/4 + getWidth()/8, 240);
+                    g.drawString("que es atrapado ganas dos puntos y si el balÃ³n", getWidth()/4 + getWidth()/8, 260);
                     g.drawString("cae tres veces pierdes una vida.", getWidth()/4 + getWidth()/8, 280);
                     g.drawString("Teclas: ", getWidth()/4 + getWidth()/8, 300);
                     g.drawString("Flecha izquierda - se mueve a la izquierda", getWidth()/4 + getWidth()/8, 320);
