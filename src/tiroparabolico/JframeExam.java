@@ -106,7 +106,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         
         bomb = new SoundClip("sounds/Explosion.wav");
         anota = new SoundClip("sounds/Cheering.wav");
-        velocI = 250;
+        velocI = (int)(Math.random()*(112-85)) + 85; //85 a 112
         t=.15;
         URL goURL = this.getClass().getResource("gameover.jpg");
         gameover = Toolkit.getDefaultToolkit().getImage(goURL);
@@ -207,18 +207,19 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
           if(balonMove){
                //Guarda el tiempo actual
             
-                long tiempoTranscurrido =
-                        System.currentTimeMillis() - getTiempoActual();
-                setTiempoActual(getTiempoActual() + tiempoTranscurrido);
+              long tiempoTranscurrido =
+              System.currentTimeMillis() - getTiempoActual();
+              setTiempoActual(getTiempoActual() + tiempoTranscurrido);
               setAnguloRadianes(45);
               setCos(Math.cos(getAnguloRadianes()));
               setSin(Math.sin(getAnguloRadianes()));
-              int x = (int) (112 * getCos() * t);
-              int y = (int) ((112* sin* t) - ( .5*9.8*t*t));
+              int x = (int) (velocI * getCos() * t);
+              int y = (int) ((velocI* sin* t) - ( .5*9.8*t*t));
               balon.setPosX(x);
               balon.setPosY(-y+ 500);
               System.out.println( "cos: " + cos+ " " + " sin: " + sin + " tiempo: " + t);
               System.out.println( "x: " + x+ " " + " y: " + y);
+              System.out.println( "Velocidad: " + velocI );
            
 
             //Actualiza la animación en base al tiempo transcurrido
@@ -266,10 +267,11 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
 //                break;
 //            }
 //        }
+        //velocI = (int)(Math.random()*(112-85)) + 85;
         if (balon.getPosY() > getHeight()){
             balonMove=false;
             balon.setPosX(0);
-            balon.setPosY(100);
+            balon.setPosY(500);
             t=.15;
             if (activaSonido) {
                 bomb.play();
