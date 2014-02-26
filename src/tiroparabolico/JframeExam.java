@@ -157,6 +157,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         try{
             if (presionaC) {
                leeArchivo();    //lee el contenido del archivo 
+               presionaC= false;
             }
             if (presionaG) {
                 vec.add(new Puntaje(score));    //Agrega el contenido del nuevo puntaje al vector.
@@ -723,30 +724,24 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     public void leeArchivo() throws IOException{
     	BufferedReader fileIn;
             try{
-                System.out.println(nombreArchivo+"");
+                presionaC=false;
                 fileIn = new BufferedReader(new FileReader(nombreArchivo));
                 String dato = fileIn.readLine();
                 setArr(dato.split(","));
-//                score = (Integer.parseInt(arr[0]));
-//                vidas = (Integer.parseInt(arr[1]));
-//                balon.setPosX(Integer.parseInt(arr[2]));
-//                balon.setPosX(Integer.parseInt(arr[3]));
-//                anotacion.setPosX(Integer.parseInt(arr[4]));
-//                anotacion.setPosY(Integer.parseInt(arr[5]));
-//                balonMove= true;
-//                
-//                gravedad = (Double.parseDouble(arr[7]));
-//                angulo = (Double.parseDouble(arr[8]));
-//                velocI = (Integer.parseInt(arr[9]));
-//                t = (Double.parseDouble(arr[10]));
-//                presionaC = true;
-//                bolaBool2 = true;
-            
-                actualiza();
+                score = (Integer.parseInt(arr[0]));
+                vidas = (Integer.parseInt(arr[1]));
+                balon.setPosX(Integer.parseInt(arr[2]));
+                balon.setPosX(Integer.parseInt(arr[3]));
+                anotacion.setPosX(Integer.parseInt(arr[4]));
+                anotacion.setPosY(Integer.parseInt(arr[5]));
+                balonMove= true;
                 
-                
-                
+                gravedad = (Double.parseDouble(arr[7]));
+                angulo = (Double.parseDouble(arr[8]));
+                velocI = (Integer.parseInt(arr[9]));
+                t = (Double.parseDouble(arr[10]));
                 fileIn.close();
+                actualiza();
             } 
             catch (IOException ioe){
                 System.out.println("Se arrojo una excepcion " + ioe.toString());
