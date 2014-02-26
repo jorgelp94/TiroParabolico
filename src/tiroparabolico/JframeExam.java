@@ -7,7 +7,6 @@ package tiroparabolico;
 import javax.swing.JFrame;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -26,6 +25,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.FileWriter;
+import javax.swing.ImageIcon;
 
 public class JframeExam extends JFrame implements Runnable, KeyListener, MouseListener {
 
@@ -69,7 +69,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private String nombreArchivo;    //Nombre del archivo.
     private Vector vec;    // Objeto vector para agregar el puntaje.
     private String[] arr;  //array para obtener lo guardado
-
+    private ImageIcon fondo;
     
 
     /**
@@ -88,7 +88,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         balon = new Balon(0, 500);
         anotacion = new Anotacion(getWidth()/2, getHeight()-80);
         
-        setBackground(Color.white);
+        URL tURL = this.getClass().getResource("images/images.jpg");
+        fondo = new ImageIcon(Toolkit.getDefaultToolkit().getImage(tURL));
         addKeyListener(this);
         addMouseListener(this);
         
@@ -494,6 +495,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      * @param g es el <code>objeto grafico</code> usado para dibujar.
      */
     public void paint1(Graphics g) {
+          g.drawImage(fondo.getImage(), 0, 0,1300,700, this);
         if (vidas > 0) {
             if (balon != null) {
                 //Dibuja la imagen en la posicion actualizada
@@ -780,6 +782,20 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void setArr(String[] arr) {
         this.arr = arr;
+    }
+
+    /**
+     * @return the fondo
+     */
+    public ImageIcon getFondo() {
+        return fondo;
+    }
+
+    /**
+     * @param fondo the fondo to set
+     */
+    public void setFondo(ImageIcon fondo) {
+        this.fondo = fondo;
     }
     
 }
