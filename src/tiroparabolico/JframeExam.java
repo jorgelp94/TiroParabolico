@@ -18,6 +18,14 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.Random;
+import java.io.IOException;
+import java.util.Vector;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.FileWriter;
 
 public class JframeExam extends JFrame implements Runnable, KeyListener, MouseListener {
 
@@ -47,6 +55,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private boolean ladoIzq; 
     private boolean ladoDer;
     private boolean activaSonido;
+    private boolean presionaG;
+    private boolean presionaC;
     private int velocI;
     private double t;
     private double gravedad;
@@ -56,6 +66,9 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private double sin;
     private int caidas; //cuenta las veces que cae el balon
     private int score; // puntaje del jugador
+    private String nombreArchivo;    //Nombre del archivo.
+    private Vector vec;    // Objeto vector para agregar el puntaje.
+    
     
 
     /**
@@ -78,12 +91,16 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         addKeyListener(this);
         addMouseListener(this);
         
+        nombreArchivo = "Puntaje.txt";
+        vec = new Vector();
         caidas = 0;
         score = 0;
         
         presionaI = false;
         ladoIzq = false;
         ladoDer = false;
+        presionaG = false;
+        presionaC = false;
         activaSonido = true; // El sonido esta activado al iniciar el juego
         //Se cargan los sonidos.
         
@@ -136,6 +153,18 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 System.out.println("Error en " + ex.toString());
             }
         }
+        try{
+            if (presionaC) {
+               leeArchivo();    //lee el contenido del archivo 
+            }
+            if (presionaG) {
+                vec.add(new Puntaje(score));    //Agrega el contenido del nuevo puntaje al vector.
+                grabaArchivo();    //Graba el vector en el archivo.
+            }
+            
+	}catch(IOException e){
+            System.out.println("Error en " + e.toString());
+	}
     }
 
     /**
@@ -335,6 +364,26 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
             }
             else {
                 activaSonido = true;
+            }
+        }
+        
+        // Tecla para guardar archivo
+        if (e.getKeyCode() == KeyEvent.VK_G) {
+            if (presionaG) {
+                presionaG = false;
+            }
+            else {
+                presionaG = true;
+            }
+        }
+        
+        // Tecla para cargar archivo
+        if (e.getKeyCode() == KeyEvent.VK_C) {
+            if (presionaC) {
+                presionaC = false;
+            }
+            else {
+                presionaC = true;
             }
         }
     }
@@ -636,4 +685,48 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     public void setAnotacion(Anotacion anotacion) {
         this.anotacion = anotacion;
     }
+    
+    /**
+     * Metodo que lee a informacion de un archivo y lo agrega a un vector.
+     *
+     * @throws IOException
+     */
+    public void leeArchivo() throws IOException{
+    	BufferedReader fileIn;
+    	try{
+    		fileIn = new BufferedReader(new FileReader(nombreArchivo));
+    	} catch (FileNotFoundException e){
+    		File puntos = new File(nombreArchivo);
+    		PrintWriter fileOut = new PrintWriter(puntos);
+    		fileOut.println("100,demo");
+    		fileOut.close();
+    		fileIn = new BufferedReader(new FileReader(nombreArchivo));
+    	}
+    	String dato = fileIn.readLine();
+
+    	while(dato != null) {
+                //No entiendo esta parte del arreglo ni para que se usa
+    		arr = dato.split(",");
+    		int num = (Integer.parseInt(arr[0])); //ni esta
+    		vec.add(new Puntaje(num));
+    		dato = fileIn.readLine();
+    	}
+    	fileIn.close();
+    }
+
+    /**
+     * Metodo que agrega la informacion del vector al archivo.
+     *
+     * @throws IOException
+     */
+    public void grabaArchivo() throws IOException{
+    	PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
+    	for (int i=0; i<vec.size(); i++) {
+    		Puntaje x;
+    		x = (Puntaje) vec.get(i);
+    		fileOut.println(x.toString());
+    	}
+    	fileOut.close();	
+    }
+    
 }
