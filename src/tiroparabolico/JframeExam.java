@@ -99,7 +99,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         vec = new Vector();
         caidas = 0;
         score = 0;
-        
+        gravedad= 9.8;
         presionaI = false;
         ladoIzq = false;
         ladoDer = false;
@@ -182,14 +182,14 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
             switch (direccion) {
                 case 3: {
                     if (!ladoIzq && balonMove){
-                        anotacion.setPosX(anotacion.getPosX() - 1);
+                        anotacion.setPosX(anotacion.getPosX() - 4);
                         break;    //se mueve hacia izquierda
                     }
                     
                 }
                 case 4: {
                     if (!ladoDer && balonMove) {
-                        anotacion.setPosX(anotacion.getPosX() + 1);
+                        anotacion.setPosX(anotacion.getPosX() + 4);
                         break;    //se mueve hacia derecha
                     }	
                 }
@@ -231,7 +231,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
               setCos(Math.cos(getAnguloRadianes()));
               setSin(Math.sin(getAnguloRadianes()));
               int x = (int) (velocI * getCos() * t);
-              int y = (int) ((velocI* sin* t) - ( .5*9.8*t*t));
+              int y = (int) ((velocI* sin* t) - ( .5*gravedad*t*t));
               balon.setPosX(x);
               balon.setPosY(-y+ 500);
               System.out.println( "cos: " + cos+ " " + " sin: " + sin + " tiempo: " + t);
