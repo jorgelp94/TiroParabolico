@@ -59,6 +59,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private boolean presionaC;
     private int velocI;
     private double t;
+    private double time;
     private double gravedad;
     private double angulo;
     private double anguloRadianes;
@@ -109,6 +110,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         anota = new SoundClip("sounds/Cheering.wav");
         velocI = (int)(Math.random()*(112-85)) + 85; //85 a 112
         t=.15;
+        time = 0;
         URL goURL = this.getClass().getResource("gameover.jpg");
         gameover = Toolkit.getDefaultToolkit().getImage(goURL);
         start();
@@ -227,8 +229,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
               setAnguloRadianes(45);
               setCos(Math.cos(getAnguloRadianes()));
               setSin(Math.sin(getAnguloRadianes()));
-              int x = (int) (velocI * getCos() * t);
-              int y = (int) ((velocI* sin* t) - ( .5*9.8*t*t));
+              int x = (int) (velocI * getCos() * (t+time));
+              int y = (int) ((velocI* sin* (t+time)) - ( .5*9.8*(t+time)*(t+time)));
               balon.setPosX(x);
               balon.setPosY(-y+ 500);
               System.out.println( "cos: " + cos+ " " + " sin: " + sin + " tiempo: " + t);
@@ -241,6 +243,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
             anotacion.actualiza(tiempoTranscurrido);
             t = t + .1;
           }
+          
         }
     }
 
@@ -281,8 +284,8 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
 //                break;
 //            }
 //        }
-        //velocI = (int)(Math.random()*(112-85)) + 85;
         if (balon.getPosY() > getHeight()){
+            velocI = (int)(Math.random()*(112-85)) + 85;
             balonMove=false;
             balon.setPosX(0);
             balon.setPosY(500);
@@ -293,11 +296,13 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
             caidas++; //Cuenta cuando hay una caida
             if (caidas == 3) {
                 vidas--;// se resta una vida cuando el balon cae 3 veces
+                time += .5;
                 caidas = 0;
             }
         }
         
         if (balon.intersecta(anotacion)) {
+            velocI = (int)(Math.random()*(112-85)) + 85;
             if (activaSonido) {
                 anota.play();
             }
