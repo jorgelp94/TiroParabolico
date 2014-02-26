@@ -493,7 +493,18 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                     choca = false;
                 }
                 if (presionaI) {
-                    g.drawString("Instrucciones:...................", getWidth()/2, 200);
+                    g.drawString("Instrucciones:", getWidth()/4 + getWidth()/8, 200);
+                    g.drawString("El objetivo del juego es mover el jugador", getWidth()/4 + getWidth()/8, 220);
+                    g.drawString("con las flechas del teclado para que atrape", getWidth()/4 + getWidth()/8, 240);
+                    g.drawString("el balon de americano.", getWidth()/4 + getWidth()/8, 260);
+                    g.drawString("Moverse: ", getWidth()/4 + getWidth()/8, 280);
+                    g.drawString("Flecha izquierda - se mueve a la izquierda", getWidth()/4 + getWidth()/8, 300);
+                    g.drawString("Flecha derecha - se mueve a la derecha", getWidth()/4 + getWidth()/8, 320);
+                    g.drawString("I - muestra/oculta instrucciones", getWidth()/4 + getWidth()/8, 340);
+                    g.drawString("G - guarda el juego", getWidth()/4 + getWidth()/8, 360);
+                    g.drawString("C - carga el juego", getWidth()/4 + getWidth()/8, 380);
+                    g.drawString("P - pausa el juego", getWidth()/4 + getWidth()/8, 400);
+                    g.drawString("S - activa/desactiva el sonido del juego", getWidth()/4 + getWidth()/8, 420);
                 }
             } else {
                 //Da un mensaje mientras se carga el dibujo	
