@@ -197,7 +197,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
           else {
               ladoDer = false;
           }
-          if (anotacion.getPosX() <= 0) {
+          if (anotacion.getPosX() <= getWidth()/2) {
               ladoIzq = true;
           }
           else {
@@ -706,9 +706,9 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
 
     	while(dato != null) {
                 //No entiendo esta parte del arreglo ni para que se usa
-    		arr = dato.split(",");
-    		int num = (Integer.parseInt(arr[0])); //ni esta
-    		vec.add(new Puntaje(num));
+    		//arr = dato.split(",");
+    		//int num = (Integer.parseInt(arr[0])); //ni esta
+    		//vec.add(new Puntaje(num));
     		dato = fileIn.readLine();
     	}
     	fileIn.close();
