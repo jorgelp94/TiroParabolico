@@ -1,7 +1,7 @@
 /*
-* @LuisReyna
-* @JorgePerales
-* @version1
+* @LuisReyna A01139953
+* @JorgePerales A00813101
+* @version 1.0
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -297,7 +297,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 bomb.play();
             }
             caidas++; //Cuenta cuando hay una caida
-            if (caidas == 1) {
+            if (caidas == 3) {
                 tP += .05;
                 vidas--;// se resta una vida cuando el balon cae 3 veces
                 caidas = 0;
