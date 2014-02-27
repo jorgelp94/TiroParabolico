@@ -1,4 +1,7 @@
 /*
+* @LuisReyna
+* @JorgePerales
+* @version1
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -54,7 +57,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private boolean choca;
     private boolean presionaI;
     private boolean balonMove;
-    private boolean ladoIzq; 
+    private boolean ladoIzq;
     private boolean ladoDer;
     private boolean activaSonido;
     private boolean presionaG;
@@ -72,7 +75,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     private Vector vec;    // Objeto vector para agregar el puntaje.
     private String[] arr;  //array para obtener lo guardado
     private ImageIcon fondo;
-    
+    private double tP;
 
     /**
      * Metodo <I>init</I> sobrescrito de la clase
@@ -81,38 +84,39 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      * usarse en el
      * <code>Applet</code> y se definen funcionalidades.
      */
-        public JframeExam() {
-            
+    public JframeExam() {
+
         this.setSize(1300, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPause(false);
         vidas = 5;    // Le asignamos un valor inicial a las vidas
         balon = new Balon(0, 500);
-        anotacion = new Anotacion(getWidth()/2, getHeight()-80);
-        
+        anotacion = new Anotacion(getWidth() / 2, getHeight() - 80);
+
         URL tURL = this.getClass().getResource("images/images.jpg");
         fondo = new ImageIcon(Toolkit.getDefaultToolkit().getImage(tURL));
         addKeyListener(this);
         addMouseListener(this);
-        
+
         nombreArchivo = "Puntaje.txt";
         vec = new Vector();
         caidas = 0;
         score = 0;
-        gravedad= 9.8;
+        gravedad = 9.8;
         presionaI = false;
         ladoIzq = false;
         ladoDer = false;
         presionaG = false;
         presionaC = false;
         activaSonido = true; // El sonido esta activado al iniciar el juego
+        tP = .1;
         //Se cargan los sonidos.
-        
+
         bomb = new SoundClip("sounds/Explosion.wav");
         anota = new SoundClip("sounds/Cheering.wav");
-        velocI = (int)(Math.random()*(112-85)) + 85; //85 a 112
-        t=.15;
-        URL goURL = this.getClass().getResource("gameover.jpg");
+        velocI = (int) (Math.random() * (112 - 85)) + 85; //85 a 112
+        t = .15;
+        URL goURL = this.getClass().getResource("images/gameover.jpg");
         gameover = Toolkit.getDefaultToolkit().getImage(goURL);
         start();
     }
@@ -157,19 +161,19 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 System.out.println("Error en " + ex.toString());
             }
         }
-        try{
+        try {
             if (presionaC) {
-               leeArchivo();    //lee el contenido del archivo 
-               presionaC= false;
+                leeArchivo();    //lee el contenido del archivo 
+                presionaC = false;
             }
             if (presionaG) {
                 vec.add(new Puntaje(score));    //Agrega el contenido del nuevo puntaje al vector.
                 grabaArchivo();    //Graba el vector en el archivo.
             }
-            
-	}catch(IOException e){
+
+        } catch (IOException e) {
             System.out.println("Error en " + e.toString());
-	}
+        }
     }
 
     /**
@@ -181,69 +185,67 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
         if (!isPause() && !presionaI) {
             switch (direccion) {
                 case 3: {
-                    if (!ladoIzq && balonMove){
+                    if (!ladoIzq && balonMove) {
                         anotacion.setPosX(anotacion.getPosX() - 4);
                         break;    //se mueve hacia izquierda
                     }
-                    
+
                 }
                 case 4: {
                     if (!ladoDer && balonMove) {
                         anotacion.setPosX(anotacion.getPosX() + 4);
                         break;    //se mueve hacia derecha
-                    }	
+                    }
                 }
             }
-            
-          //Checa que el jugador no se salga del applet  
-          if (anotacion.getAncho() + anotacion.getPosX() >= getWidth()) {
-              ladoDer = true;
-          }
-          else {
-              ladoDer = false;
-          }
-          if (anotacion.getPosX() <= getWidth()/2) {
-              ladoIzq = true;
-          }
-          else {
-              ladoIzq = false;
-          }
-        try{
-            if (presionaC) {
-               leeArchivo();    //lee el contenido del archivo 
-            }
-            if (presionaG) {
-                System.out.println("Entrar1");
-                presionaG= false;
-                grabaArchivo();    //Graba el vector en el archivo.
-            }
-            
-	}catch(IOException e){
-            System.out.println("Error en " + e.toString());
-	}
-          if(balonMove){
-               //Guarda el tiempo actual
-            
-              long tiempoTranscurrido =
-              System.currentTimeMillis() - getTiempoActual();
-              setTiempoActual(getTiempoActual() + tiempoTranscurrido);
-              setAnguloRadianes(45);
-              setCos(Math.cos(getAnguloRadianes()));
-              setSin(Math.sin(getAnguloRadianes()));
-              int x = (int) (velocI * getCos() * t);
-              int y = (int) ((velocI* sin* t) - ( .5*gravedad*t*t));
-              balon.setPosX(x);
-              balon.setPosY(-y+ 500);
-              System.out.println( "cos: " + cos+ " " + " sin: " + sin + " tiempo: " + t);
-              System.out.println( "x: " + x+ " " + " y: " + y);
-              System.out.println( "Velocidad: " + velocI );
-           
 
-            //Actualiza la animaciÃ³n en base al tiempo transcurrido
-            balon.actualiza(tiempoTranscurrido);
-            anotacion.actualiza(tiempoTranscurrido);
-            t = t + .1;
-          }
+            //Checa que el jugador no se salga del applet  
+            if (anotacion.getAncho() + anotacion.getPosX() >= getWidth()) {
+                ladoDer = true;
+            } else {
+                ladoDer = false;
+            }
+            if (anotacion.getPosX() <= getWidth() / 2) {
+                ladoIzq = true;
+            } else {
+                ladoIzq = false;
+            }
+            try {
+                if (presionaC) {
+                    leeArchivo();    //lee el contenido del archivo 
+                }
+                if (presionaG) {
+                    System.out.println("Entrar1");
+                    presionaG = false;
+                    grabaArchivo();    //Graba el vector en el archivo.
+                }
+
+            } catch (IOException e) {
+                System.out.println("Error en " + e.toString());
+            }
+            if (balonMove) {
+                //Guarda el tiempo actual
+
+                long tiempoTranscurrido =
+                        System.currentTimeMillis() - getTiempoActual();
+                setTiempoActual(getTiempoActual() + tiempoTranscurrido);
+                setAnguloRadianes(45);
+                setCos(Math.cos(getAnguloRadianes()));
+                setSin(Math.sin(getAnguloRadianes()));
+                int x = (int) (velocI * getCos() * t);
+                int y = (int) ((velocI * sin * t) - (.5 * gravedad * t * t));
+                balon.setPosX(x);
+                balon.setPosY(-y + 500);
+                System.out.println("cos: " + cos + " " + " sin: " + sin + " tiempo: " + t);
+                System.out.println("x: " + x + " " + " y: " + y);
+                System.out.println("Velocidad: " + velocI);
+
+
+                //Actualiza la animaciÃ³n en base al tiempo transcurrido
+                balon.actualiza(tiempoTranscurrido);
+                anotacion.actualiza(tiempoTranscurrido);
+                t = t + tP;
+            }
         }
     }
 
@@ -285,34 +287,35 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
 //            }
 //        }
         //velocI = (int)(Math.random()*(112-85)) + 85;
-        if (balon.getPosY() > getHeight()){
-            balonMove=false;
-            velocI = (int)(Math.random()*(112-85)) + 85; //85 a 112
+        if (balon.getPosY() > getHeight()) {
+            balonMove = false;
+            velocI = (int) (Math.random() * (112 - 85)) + 85; //85 a 112
             balon.setPosX(0);
             balon.setPosY(500);
-            t=.15;
+            t = .15;
             if (activaSonido) {
                 bomb.play();
             }
             caidas++; //Cuenta cuando hay una caida
-            if (caidas == 3) {
+            if (caidas == 1) {
+                tP += .05;
                 vidas--;// se resta una vida cuando el balon cae 3 veces
                 caidas = 0;
             }
         }
-        
+
         if (balon.intersecta(anotacion)) {
-            velocI = (int)(Math.random()*(112-85)) + 85; //85 a 112
+            velocI = (int) (Math.random() * (112 - 85)) + 85; //85 a 112
             if (activaSonido) {
                 anota.play();
             }
-            balonMove=false;
+            balonMove = false;
             balon.setPosX(0);
             balon.setPosY(500);
-            t=.15;
+            t = .15;
             score = score + 2;
         }
-       
+
     }
 
     /**
@@ -350,11 +353,6 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      * @param e es el <code>evento</code> generado al presionar las teclas.
      */
     public void keyPressed(KeyEvent e) {
-//		if (e.getKeyCode() == KeyEvent.VK_UP) {    //Presiono flecha arriba
-//			direccion = 1;
-//		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {    //Presiono flecha abajo
-//			direccion = 2;
-//		} else
         if (e.getKeyCode() == KeyEvent.VK_P) {
             if (isPause()) {
                 setPause(false);
@@ -368,44 +366,40 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 direccion = 4;
             }
         }
-        
+
         //Si se presiona la tecla I, presionaI cambia a verdadero. si se vuelve a presionar presionaI cambia a falso
         // Salen instrucciones del juego
         if (e.getKeyCode() == KeyEvent.VK_I) {
             if (presionaI) {
                 presionaI = false;
-            }
-            else {
+            } else {
                 presionaI = true;
             }
         }
-        
+
         // Quita el sonido
-        if (e.getKeyCode() == KeyEvent.VK_S) {
+        if (e.getKeyCode() == KeyEvent.VK_S && !presionaI) {
             if (activaSonido) {
                 activaSonido = false;
-            }
-            else {
+            } else {
                 activaSonido = true;
             }
         }
-        
+
         // Tecla para guardar archivo
-        if (e.getKeyCode() == KeyEvent.VK_G) {
+        if (e.getKeyCode() == KeyEvent.VK_G && !presionaI) {
             if (presionaG) {
                 presionaG = false;
-            }
-            else {
+            } else {
                 presionaG = true;
             }
         }
-        
+
         // Tecla para cargar archivo
         if (e.getKeyCode() == KeyEvent.VK_C) {
             if (presionaC) {
                 presionaC = false;
-            }
-            else {
+            } else {
                 presionaC = true;
             }
         }
@@ -436,58 +430,62 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
 
     /**
      * Metodo <I>mousePressed</I>
-     * En este metodo se valida en donde dio click el usario para determinar la direccion
+     * En este metodo se valida en donde dio click el usario para determinar la
+     * direccion
      *
-     * @param e es el <code>Mouse Event</code> usado para determinar dodne dio click.
+     * @param e es el <code>Mouse Event</code> usado para determinar dodne dio
+     * click.
      */
     public void mousePressed(MouseEvent e) {
-//        if (e.getPoint().getX() <= getWidth() / 2 && e.getPoint().getY() <= getHeight() / 2) {
-//            //4
-//            direccion = 4;
-//        } else if (e.getPoint().getX() >= getWidth() / 2 && e.getPoint().getY() <= getHeight() / 2) {
-//            //1
-//            direccion = 1;
-//        } else if (e.getPoint().getX() >= getWidth() / 2 && e.getPoint().getY() >= getHeight() / 2) {
-//            //2 
-//            direccion = 2;
-//        } else if (e.getPoint().getX() <= getWidth() / 2 && e.getPoint().getY() >= getHeight() / 2) {
-//            //3 
-//            direccion = 3;
-//        }
-        if(balon.getPerimetro().contains(e.getPoint())) setBalonMove(true);
+        if (balon.getPerimetro().contains(e.getPoint())) {
+            setBalonMove(true);
+        }
     }
+
     /**
      * Metodo <I>mouseReleased</I>
-     * En este metodo se valida en donde dio click el usario para determinar la direccion
+     * En este metodo se valida en donde dio click el usario para determinar la
+     * direccion
      *
-     * @param e es el <code>Mouse Event</code> usado para determinar dodne dio click.
+     * @param e es el <code>Mouse Event</code> usado para determinar dodne dio
+     * click.
      */
     public void mouseReleased(MouseEvent e) {
     }
+
     /**
      * Metodo <I>mouseReleased</I>
-     * En este metodo se valida en donde dio click el usario para determinar la direccion
+     * En este metodo se valida en donde dio click el usario para determinar la
+     * direccion
      *
-     * @param e es el <code>Mouse Event</code> usado para determinar dodne dio click.
+     * @param e es el <code>Mouse Event</code> usado para determinar dodne dio
+     * click.
      */
     public void mouseEntered(MouseEvent e) {
     }
-/**
+
+    /**
      * Metodo <I>mouseReleased</I>
-     * En este metodo se valida en donde dio click el usario para determinar la direccion
+     * En este metodo se valida en donde dio click el usario para determinar la
+     * direccion
      *
-     * @param e es el <code>Mouse Event</code> usado para determinar dodne dio click.
+     * @param e es el <code>Mouse Event</code> usado para determinar dodne dio
+     * click.
      */
     public void mouseExited(MouseEvent e) {
     }
-/**
+
+    /**
      * Metodo <I>mouseReleased</I>
-     * En este metodo se valida en donde dio click el usario para determinar la direccion
+     * En este metodo se valida en donde dio click el usario para determinar la
+     * direccion
      *
-     * @param e es el <code>Mouse Event</code> usado para determinar dodne dio click.
+     * @param e es el <code>Mouse Event</code> usado para determinar dodne dio
+     * click.
      */
     public void mouseClicked(MouseEvent e) {
     }
+
     /**
      * Metodo <I>paint</I> sobrescrito de la clase
      * <code>Applet</code>, heredado de la clase Container.<P>
@@ -497,9 +495,9 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
      * @param g es el <code>objeto grafico</code> usado para dibujar.
      */
     public void paint1(Graphics g) {
-          g.drawImage(fondo.getImage(), 0, 0,1300,700, this);
-          g.setFont(new Font("default", Font.BOLD, 16));
-          g.setColor(Color.RED);
+//          g.drawImage(fondo.getImage(), 0, 0,1300,700, this);
+        g.setFont(new Font("default", Font.BOLD, 16));
+        g.setColor(Color.RED);
         if (vidas > 0) {
             if (balon != null) {
                 //Dibuja la imagen en la posicion actualizada
@@ -508,7 +506,7 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                 g.drawImage(anotacion.getImagenI(), anotacion.getPosX(), anotacion.getPosY(), this);
 //                g.drawString("Puntos : " + list.get(0).getNum(), 10, 10);
                 //Muestra las vidas
-                g.drawString("Vidas: "+ vidas, getWidth()/2 - 10, 80);
+                g.drawString("Vidas: " + vidas, getWidth() / 2 - 10, 80);
                 //Muestra el puntaje
                 g.drawString("Score: " + score, balon.getAncho(), 80);
                 if (isPause()) {
@@ -519,27 +517,33 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
                     choca = false;
                 }
                 if (presionaI) {
-                    
-                    g.drawString("Instrucciones:", getWidth()/4 + getWidth()/8, 200);
-                    g.drawString("Mueve el jugador con las flechas del teclado", getWidth()/4 + getWidth()/8, 220);
-                    g.drawString("para que atrape el balon de americano. Cada vez", getWidth()/4 + getWidth()/8, 240);
-                    g.drawString("que es atrapado ganas dos puntos y si el balon", getWidth()/4 + getWidth()/8, 260);
-                    g.drawString("cae tres veces pierdes una vida.", getWidth()/4 + getWidth()/8, 280);
-                    g.drawString("Teclas: ", getWidth()/4 + getWidth()/8, 300);
-                    g.drawString("Flecha izquierda - se mueve a la izquierda", getWidth()/4 + getWidth()/8, 320);
-                    g.drawString("Flecha derecha - se mueve a la derecha", getWidth()/4 + getWidth()/8, 340);
-                    g.drawString("I - muestra/oculta instrucciones", getWidth()/4 + getWidth()/8, 360);
-                    g.drawString("G - guarda el juego", getWidth()/4 + getWidth()/8, 380);
-                    g.drawString("C - carga el juego", getWidth()/4 + getWidth()/8, 400);
-                    g.drawString("P - pausa el juego", getWidth()/4 + getWidth()/8, 420);
-                    g.drawString("S - activa/desactiva el sonido del juego", getWidth()/4 + getWidth()/8, 440);
+
+                    g.drawString("Instrucciones:", getWidth() / 4 + getWidth() / 8, 200);
+                    g.drawString("Mueve el jugador con las flechas del teclado", getWidth() / 4 + getWidth() / 8, 220);
+                    g.drawString("para que atrape el balon de americano. Cada vez", getWidth() / 4 + getWidth() / 8, 240);
+                    g.drawString("que es atrapado ganas dos puntos y si el balon", getWidth() / 4 + getWidth() / 8, 260);
+                    g.drawString("cae tres veces pierdes una vida.", getWidth() / 4 + getWidth() / 8, 280);
+                    g.drawString("Teclas: ", getWidth() / 4 + getWidth() / 8, 300);
+                    g.drawString("Flecha izquierda - se mueve a la izquierda", getWidth() / 4 + getWidth() / 8, 320);
+                    g.drawString("Flecha derecha - se mueve a la derecha", getWidth() / 4 + getWidth() / 8, 340);
+                    g.drawString("I - muestra/oculta instrucciones", getWidth() / 4 + getWidth() / 8, 360);
+                    g.drawString("G - guarda el juego", getWidth() / 4 + getWidth() / 8, 380);
+                    g.drawString("C - carga el juego", getWidth() / 4 + getWidth() / 8, 400);
+                    g.drawString("P - pausa el juego", getWidth() / 4 + getWidth() / 8, 420);
+                    g.drawString("S - activa/desactiva el sonido del juego", getWidth() / 4 + getWidth() / 8, 440);
                 }
             } else {
                 //Da un mensaje mientras se carga el dibujo	
                 g.drawString("No se cargo la imagen..", 20, 20);
             }
         } else {
-            g.drawImage(gameover, 0, 0, this);
+            this.setBackground(Color.GRAY);
+             g.drawString("    Creditos:", getWidth() / 4 + getWidth() / 8, 200);
+            g.drawString("Luis Alberto Reyna", getWidth() / 4 + getWidth() / 8, 220);
+            g.drawString("Jorge Luis Perales", getWidth() / 4 + getWidth() / 8, 240);
+            g.drawString("     Colaboracion:", getWidth() / 4 + getWidth() / 8, 260);
+            g.drawString("Antonio Mejorado", getWidth() / 4 + getWidth() / 8, 280);
+                    
         }
     }
 
@@ -724,55 +728,60 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     public void setAnotacion(Anotacion anotacion) {
         this.anotacion = anotacion;
     }
-    
+
     /**
+     * @LuisReyna
+     * @JorgePerales
+     * @version1
      * Metodo que lee a informacion de un archivo y lo agrega a un vector.
      *
      * @throws IOException
      */
-    public void leeArchivo() throws IOException{
-    	BufferedReader fileIn;
-            try{
-                presionaC=false;
-                fileIn = new BufferedReader(new FileReader(nombreArchivo));
-                String dato = fileIn.readLine();
-                setArr(dato.split(","));
-                score = (Integer.parseInt(arr[0]));
-                vidas = (Integer.parseInt(arr[1]));
-                balon.setPosX(Integer.parseInt(arr[2]));
-                balon.setPosX(Integer.parseInt(arr[3]));
-                anotacion.setPosX(Integer.parseInt(arr[4]));
-                anotacion.setPosY(Integer.parseInt(arr[5]));
-                balonMove= true;
-                
-                gravedad = (Double.parseDouble(arr[7]));
-                angulo = (Double.parseDouble(arr[8]));
-                velocI = (Integer.parseInt(arr[9]));
-                t = (Double.parseDouble(arr[10]));
-                fileIn.close();
-                actualiza();
-            } 
-            catch (IOException ioe){
-                System.out.println("Se arrojo una excepcion " + ioe.toString());
-            }
+    public void leeArchivo() throws IOException {
+        BufferedReader fileIn;
+        try {
+            presionaC = false;
+            fileIn = new BufferedReader(new FileReader(nombreArchivo));
+            String dato = fileIn.readLine();
+            setArr(dato.split(","));
+            score = (Integer.parseInt(arr[0]));
+            vidas = (Integer.parseInt(arr[1]));
+            balon.setPosX(Integer.parseInt(arr[2]));
+            balon.setPosX(Integer.parseInt(arr[3]));
+            anotacion.setPosX(Integer.parseInt(arr[4]));
+            anotacion.setPosY(Integer.parseInt(arr[5]));
+            balonMove = true;
+            gravedad = (Double.parseDouble(arr[7]));
+            angulo = (Double.parseDouble(arr[8]));
+            velocI = (Integer.parseInt(arr[9]));
+            t = (Double.parseDouble(arr[10]));
+            tP = (Double.parseDouble(arr[11]));
+            activaSonido = (Boolean.parseBoolean(arr[12]));
+            fileIn.close();
+            actualiza();
+        } catch (IOException ioe) {
+            System.out.println("Se arrojo una excepcion " + ioe.toString());
+        }
     }
 
     /**
+     * @LuisReyna
+     * @JorgePerales
+     * @version1
      * Metodo que agrega la informacion del vector al archivo.
      *
      * @throws IOException
      */
-    public void grabaArchivo() throws IOException{
-    	 try {
-                PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
+    public void grabaArchivo() throws IOException {
+        try {
+            PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
 
-                fileOut.println("" +score + "," + vidas + "," + balon.getPosX() + "," + balon.getPosY() + "," + anotacion.getPosX() + "," + anotacion.getPosY() + "," + balonMove + "," + gravedad + "," + angulo + "," + velocI + "," + t);
+            fileOut.println("" + score + "," + vidas + "," + balon.getPosX() + "," + balon.getPosY() + "," + anotacion.getPosX() + "," + anotacion.getPosY() + "," + balonMove + "," + gravedad + "," + angulo + "," + velocI + "," + t + "," + tP + "," + activaSonido);
 
-                fileOut.close();
-            }
-            catch (IOException ioe){
-                System.out.println("Se arrojo una excepcion " + ioe.toString());
-        }	
+            fileOut.close();
+        } catch (IOException ioe) {
+            System.out.println("Se arrojo una excepcion " + ioe.toString());
+        }
     }
 
     /**
@@ -802,5 +811,18 @@ public class JframeExam extends JFrame implements Runnable, KeyListener, MouseLi
     public void setFondo(ImageIcon fondo) {
         this.fondo = fondo;
     }
-    
+
+    /**
+     * @return the tP
+     */
+    public double gettP() {
+        return tP;
+    }
+
+    /**
+     * @param tP the tP to set
+     */
+    public void settP(double tP) {
+        this.tP = tP;
+    }
 }
